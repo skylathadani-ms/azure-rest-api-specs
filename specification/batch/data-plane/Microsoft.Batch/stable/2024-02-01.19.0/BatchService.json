@@ -9980,6 +9980,249 @@
         }
       }
     },
+    "/pools/{poolId}/nodes/{nodeId}/start": {
+      "post": {
+        "tags": [
+          "ComputeNodes"
+        ],
+        "operationId": "ComputeNode_Start",
+        "x-ms-examples": {
+          "Node reboot": {
+            "$ref": "./examples/NodeStart.json"
+          }
+        },
+        "summary": "Starts the specified Compute Node.",
+        "description": "You can start a Compute Node only if it has been deallocated",
+        "x-ms-request-id": "request-id",
+        "parameters": [
+          {
+            "name": "poolId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ID of the Pool that contains the Compute Node."
+          },
+          {
+            "name": "nodeId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ID of the Compute Node that you want to start."
+          },
+          {
+            "name": "timeout",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 30,
+            "description": "The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds.",
+            "x-ms-parameter-grouping": {
+              "postfix": "Options"
+            }
+          },
+          {
+            "name": "client-request-id",
+            "in": "header",
+            "required": false,
+            "type": "string",
+            "format": "uuid",
+            "description": "The caller-generated request identity, in the form of a GUID with no decoration such as curly braces, e.g. 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.",
+            "x-ms-parameter-grouping": {
+              "postfix": "Options"
+            },
+            "x-ms-client-request-id": true
+          },
+          {
+            "name": "return-client-request-id",
+            "default": false,
+            "in": "header",
+            "required": false,
+            "type": "boolean",
+            "description": "Whether the server should return the client-request-id in the response.",
+            "x-ms-parameter-grouping": {
+              "postfix": "Options"
+            }
+          },
+          {
+            "name": "ocp-date",
+            "in": "header",
+            "required": false,
+            "type": "string",
+            "format": "date-time-rfc1123",
+            "description": "The time the request was issued. Client libraries typically set this to the current system clock time; set it explicitly if you are calling the REST API directly.",
+            "x-ms-parameter-grouping": {
+              "postfix": "Options"
+            }
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "202": {
+            "headers": {
+              "client-request-id": {
+                "description": "The client-request-id provided by the client during the request. This will be returned only if the return-client-request-id parameter was set to true.",
+                "type": "string",
+                "format": "uuid"
+              },
+              "request-id": {
+                "description": "A unique identifier for the request that was made to the Batch service. If a request is consistently failing and you have verified that the request is properly formulated, you may use this value to report the error to Microsoft. In your report, include the value of this request ID, the approximate time that the request was made, the Batch Account against which the request was made, and the region that Account resides in.",
+                "type": "string",
+                "format": "uuid"
+              },
+              "ETag": {
+                "description": "The ETag HTTP response header. This is an opaque string. You can use it to detect whether the resource has changed between requests. In particular, you can pass the ETag to one of the If-Modified-Since, If-Unmodified-Since, If-Match or If-None-Match headers.",
+                "type": "string"
+              },
+              "Last-Modified": {
+                "description": "The time at which the resource was last modified.",
+                "type": "string",
+                "format": "date-time-rfc1123"
+              },
+              "DataServiceId": {
+                "description": "The OData ID of the resource to which the request applied.",
+                "type": "string"
+              }
+            },
+            "description": "The request to the Batch service was successful."
+          },
+          "default": {
+            "description": "The error from the Batch service.",
+            "schema": {
+              "$ref": "#/definitions/BatchError"
+            }
+          }
+        }
+      }
+    },
+    "/pools/{poolId}/nodes/{nodeId}/deallocate": {
+      "post": {
+        "tags": [
+          "ComputeNodes"
+        ],
+        "operationId": "ComputeNode_Deallocate",
+        "x-ms-examples": {
+          "Node reboot": {
+            "$ref": "./examples/NodeDeallocate.json"
+          }
+        },
+        "summary": "Deallocates the specified Compute Node.",
+        "description": "You can deallocate a Compute Node only if it is in an idle or running state.",
+        "x-ms-request-id": "request-id",
+        "parameters": [
+          {
+            "name": "poolId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ID of the Pool that contains the Compute Node."
+          },
+          {
+            "name": "nodeId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ID of the Compute Node that you want to deallocate."
+          },
+          {
+            "name": "nodeDeallocateParameter",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/NodeDeallocateParameter"
+            },
+            "description": "The parameters for the request."
+          },
+          {
+            "name": "timeout",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "default": 30,
+            "description": "The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds.",
+            "x-ms-parameter-grouping": {
+              "postfix": "Options"
+            }
+          },
+          {
+            "name": "client-request-id",
+            "in": "header",
+            "required": false,
+            "type": "string",
+            "format": "uuid",
+            "description": "The caller-generated request identity, in the form of a GUID with no decoration such as curly braces, e.g. 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.",
+            "x-ms-parameter-grouping": {
+              "postfix": "Options"
+            },
+            "x-ms-client-request-id": true
+          },
+          {
+            "name": "return-client-request-id",
+            "default": false,
+            "in": "header",
+            "required": false,
+            "type": "boolean",
+            "description": "Whether the server should return the client-request-id in the response.",
+            "x-ms-parameter-grouping": {
+              "postfix": "Options"
+            }
+          },
+          {
+            "name": "ocp-date",
+            "in": "header",
+            "required": false,
+            "type": "string",
+            "format": "date-time-rfc1123",
+            "description": "The time the request was issued. Client libraries typically set this to the current system clock time; set it explicitly if you are calling the REST API directly.",
+            "x-ms-parameter-grouping": {
+              "postfix": "Options"
+            }
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          }
+        ],
+        "responses": {
+          "202": {
+            "headers": {
+              "client-request-id": {
+                "description": "The client-request-id provided by the client during the request. This will be returned only if the return-client-request-id parameter was set to true.",
+                "type": "string",
+                "format": "uuid"
+              },
+              "request-id": {
+                "description": "A unique identifier for the request that was made to the Batch service. If a request is consistently failing and you have verified that the request is properly formulated, you may use this value to report the error to Microsoft. In your report, include the value of this request ID, the approximate time that the request was made, the Batch Account against which the request was made, and the region that Account resides in.",
+                "type": "string",
+                "format": "uuid"
+              },
+              "ETag": {
+                "description": "The ETag HTTP response header. This is an opaque string. You can use it to detect whether the resource has changed between requests. In particular, you can pass the ETag to one of the If-Modified-Since, If-Unmodified-Since, If-Match or If-None-Match headers.",
+                "type": "string"
+              },
+              "Last-Modified": {
+                "description": "The time at which the resource was last modified.",
+                "type": "string",
+                "format": "date-time-rfc1123"
+              },
+              "DataServiceId": {
+                "description": "The OData ID of the resource to which the request applied.",
+                "type": "string"
+              }
+            },
+            "description": "The request to the Batch service was successful."
+          },
+          "default": {
+            "description": "The error from the Batch service.",
+            "schema": {
+              "$ref": "#/definitions/BatchError"
+            }
+          }
+        }
+      }
+    },
     "/pools/{poolId}/nodes/{nodeId}/remoteloginsettings": {
       "get": {
         "tags": [
@@ -15670,6 +15913,8 @@
           "title": "The current state of the Compute Node.",
           "description": "The Spot/Low-priority Compute Node has been preempted. Tasks which were running on the Compute Node when it was preempted will be rescheduled when another Compute Node becomes available.",
           "enum": [
+            "deallocated",
+            "deallocating",
             "idle",
             "rebooting",
             "reimaging",
@@ -15689,6 +15934,14 @@
             "name": "ComputeNodeState",
             "modelAsString": false,
             "values": [
+              {
+                "value": "deallocated",
+                "description": "The Compute Node is deallocated."
+              },
+              {
+                "value": "deallocating",
+                "description": "The Compute Node is deallocating."
+              },
               {
                 "value": "idle",
                 "description": "The Compute Node is not currently running a Task."
@@ -16620,6 +16873,47 @@
       },
       "title": "Options for disabling scheduling on a Compute Node."
     },
+    "NodeDeallocateParameter": {
+      "type": "object",
+      "properties": {
+        "nodeDeallocateOption": {
+          "type": "string",
+          "title": "When to deallocate the Compute Node and what to do with currently running Tasks.",
+          "description": "The default value is requeue.",
+          "enum": [
+            "requeue",
+            "terminate",
+            "taskcompletion",
+            "retaineddata"
+          ],
+          "x-ms-enum": {
+            "name": "ComputeNodeDeallocateOption",
+            "modelAsString": false,
+            "values": [
+              {
+                "value": "requeue",
+                "description": "Terminate running Task processes and requeue the Tasks. The Tasks will run again when a Compute Node is available. Deallocate the Compute Node as soon as Tasks have been terminated."
+              },
+              {
+                "value": "terminate",
+                "description": "Terminate running Tasks. The Tasks will be completed with failureInfo indicating that they were terminated, and will not run again. Deallocate the Compute Node as soon as Tasks have been terminated."
+              },
+              {
+                "value": "taskcompletion",
+                "description": "Allow currently running Tasks to complete. Schedule no new Tasks while waiting. Deallocate the Compute Node when all Tasks have completed.",
+                "name": "taskCompletion"
+              },
+              {
+                "value": "retaineddata",
+                "description": "Allow currently running Tasks to complete, then wait for all Task data retention periods to expire. Schedule no new Tasks while waiting. Deallocate the Compute Node when all Task retention periods have expired.",
+                "name": "retainedData"
+              }
+            ]
+          }
+        }
+      },
+      "title": "Options for deallocating a Compute Node."
+    },
     "NodeRemoveParameter": {
       "type": "object",
       "properties": {
@@ -17256,6 +17550,16 @@
           "type": "integer",
           "format": "int32",
           "title": "The number of Compute Nodes in the creating state."
+        },
+        "deallocated": {
+          "type": "integer",
+          "format": "int32",
+          "title": "The number of Compute Nodes in the deallocated state."
+        },
+        "deallocating": {
+          "type": "integer",
+          "format": "int32",
+          "title": "The number of Compute Nodes in the deallocating state."
         },
         "idle": {
           "type": "integer",
